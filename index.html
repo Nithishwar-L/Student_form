@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Form</title>
+  <style>
+    body {
+      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      background-color: #32eda9;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .container {
+      background-color: rgb(255, 255, 254);
+      padding: 20px;
+      width: 600px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    form {
+      border: 2px solid #090707;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 7px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .gender-group {
+      display: flex; 
+      justify-content: flex-start;
+      gap: 20px;
+       margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #ecba25;
+      border: 2px solid #000000;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 3px solid #171211;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .delete-btn {
+      background-color: rgb(232, 38, 38);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>STUDENT FORM</h1>
+    <form id="studentForm">
+      <label>Name</label>
+      <input type="text" id="name" required>
+
+      <label>Age</label>
+      <input type="number" id="age" required>
+
+      <label>Gender</label>
+      <div class="gender-group">
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+      </div>
+
+      <label>Course</label>
+      <select id="course">
+        <option>JavaScript</option>
+        <option>PYTHON</option>
+        <option>JAVA</option>
+        <option>C++</option>
+      </select>
+
+      <label>E-mail</label>
+      <input type="email" id="email" required>
+
+      <button type="submit" id="saveBtn">Save</button>
+    </form>
+
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>AGE</th>
+          <th>COURSE</th>
+          <th>GENDER</th>
+          <th>EMAIL</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const course = document.getElementById('course').value;
+      const email = document.getElementById('email').value;
+
+      const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${age}</td>
+        <td>${course}</td>
+        <td>${gender}</td>
+        <td>${email}</td>
+        <td><button class="delete-btn">Delete</button></td>
+      `;
+
+      newRow.querySelector('.delete-btn').addEventListener('click', function() {
+        table.deleteRow(newRow.rowIndex - 1);
+      });
+
+      // Reset form after submit
+      document.getElementById('studentForm').reset();
+    });
+  </script>
+</body>
+</html>
